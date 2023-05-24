@@ -1,0 +1,56 @@
+
+[
+    {
+        "id": 1,
+        "nombre": "Velas Cuenquito",
+        "desc": "De vainilla",
+        "precio": 1700,
+        "img": "./img/velaCuenquito.jpg",
+        "cantidad": 1
+    },
+
+    {
+        "id": 2,
+        "nombre": "Maceta  ",
+        "desc": "Planetas",
+        "precio": 2300,
+        "img": "./img/macetaPlanetas.jpg",
+        "cantidad": 1
+    },
+
+    {
+        "id": 3,
+        "nombre": "Taza",
+        "desc": "Colores ",
+        "precio": 2600,
+        "img": "./img/tazaColores.jpg",
+        "cantidad": 1
+    },
+
+    {
+        "id": 4,
+        "nombre": "Tazón",
+        "desc": "Frutilla",
+        "precio": 3400,
+        "img": "./img/tazonFrutilla.jpg",
+        "cantidad": 1
+    },
+
+    {
+        "id": 5,
+        "nombre": "Porta aritos",
+        "desc": "Arcoirirs",
+        "precio": 2400,
+        "img": "./img/portaAritos.jpg",
+        "cantidad": 1
+    },
+
+    {
+        "id": 6,
+        "nombre": "Porta Vasos",
+        "desc": "Floral",
+        "precio": 1750,
+        "img": "./img/portaVasos.jpg",
+        "cantidad": 1
+    }
+]
