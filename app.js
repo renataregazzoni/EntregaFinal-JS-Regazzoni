@@ -1,4 +1,4 @@
-//declaro constantes y las traigo por id
+// declaro constantes y las traigo por id
 const shopContent = document.getElementById("shopContent")
 const verCarrito = document.getElementById("verCarrito")
 const modalContainer = document.getElementById("modal-container")
@@ -6,10 +6,10 @@ const showAlert = document.getElementById("showAlert")
 const cantidadCarrito = document.getElementById("cantidadCarrito")
 const usuario = document.getElementById("usuario")
 const btnUser = document.getElementById("btn-user")
-//array carrito y/o ls
+// array carrito y/o ls
 const carrito = JSON.parse(localStorage.getItem("carrito")) || []
 
-//Bienvenida
+// Bienvenida
 const nombreUsuario = JSON.parse(localStorage.getItem("nombre"))
 nombreUsuario ? (usuario.innerHTML = `Usuario: ${nombreUsuario.toUpperCase()}`) && (alerta2()) : alerta()
 
@@ -21,41 +21,40 @@ btnUser.addEventListener('click', () => {
   window.location.reload()
 })
 
-//traigo json de productos y los pinto
-fetch("data.json")
-  .then((resp) => resp.json())
-  .then((data) => {
+// traigo json de productos y los pinto (Rehice)
+async function obtenerDatosProd() {
+  try {
+    const response = await fetch("data.json");
+    const data = await response.json();
+
     data.forEach((product) => {
       let content = document.createElement("div");
       content.className = "card";
       content.innerHTML = `
-          <img src="${product.img}">
-          <h3>${product.nombre}</h3>
-          <p class="desc">${product.desc}</p>
-          <p class="precio">$${product.precio}</p>`
-      shopContent.append(content)
+        <img src="${product.img}">
+        <h3>${product.nombre}</h3>
+        <p class="desc">${product.desc}</p>
+        <p class="precio">$${product.precio}</p>`;
 
 
-      //agrego boton comprar
-      let comprar = document.createElement("button")
-      comprar.innerText = "Comprar"
-      comprar.className = "comprar"
-      content.append(comprar)
+         // Agregar botón comprar
+      let comprar = document.createElement("button");
+      comprar.innerText = "Comprar";
+      comprar.className = "comprar";
+      content.append(comprar);
 
-
-
-      //boton comprar
+      // Botón comprar
       comprar.addEventListener("click", () => {
-        toastify()
-        const repeat = carrito.some((repeatProduct) => repeatProduct.id === product.id)
+        toastify();
+        const repeat = carrito.some((repeatProduct) => repeatProduct.id === product.id);
         if (repeat) {
-          carrito.map((prod) => {
+          carrito.forEach((prod) => {
             if (prod.id === product.id) {
-              prod.cantidad++
-              saveLocal()
-              carritoCounter()
+              prod.cantidad++;
+              saveLocal();
+              carritoCounter();
             }
-          })
+          });
         } else {
           carrito.push({
             id: product.id,
@@ -63,14 +62,18 @@ fetch("data.json")
             nombre: product.nombre,
             precio: product.precio,
             cantidad: product.cantidad,
-          })
-          saveLocal()
-          carritoCounter()
+          });
+          saveLocal();
+          carritoCounter();
         }
-      })
-    })
-  })
-  .catch((err) => console.log("Error inesperado, decime que paso 😜", err))
+      });
+
+      shopContent.append(content);
+    });
+  } catch (err) {
+    console.log("Error inesperado, decime qué pasó", err);
+  }
+}
 
 //funcion guardar al ls
 const saveLocal = () => {
