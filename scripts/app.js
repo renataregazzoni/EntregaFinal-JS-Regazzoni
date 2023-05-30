@@ -9,7 +9,8 @@ const btnUser = document.getElementById("btn-user")
 // array carrito y/o ls
 const carrito = JSON.parse(localStorage.getItem("carrito")) || []
 
-// Bienvenida
+
+//Bienvenida
 const nombreUsuario = JSON.parse(localStorage.getItem("nombre"))
 nombreUsuario ? (usuario.innerHTML = `Usuario: ${nombreUsuario.toUpperCase()}`) && (alerta2()) : alerta()
 
@@ -17,14 +18,14 @@ nombreUsuario ? (usuario.innerHTML = `Usuario: ${nombreUsuario.toUpperCase()}`) 
 btnUser.addEventListener('click', () => {
   JSON.parse(localStorage.getItem("nombre"))
   localStorage.removeItem("nombre")
-  vaciar()
   window.location.reload()
 })
 
-// traigo json de productos y los pinto (Rehice)
+// traigo json de productos y los pinto (modifique)
+document.addEventListener("DOMContentLoaded", obtenerDatosProd);
 async function obtenerDatosProd() {
   try {
-    const response = await fetch("data.json");
+    const response = await fetch("../json/data.json");
     const data = await response.json();
 
     data.forEach((product) => {
@@ -36,49 +37,54 @@ async function obtenerDatosProd() {
         <p class="desc">${product.desc}</p>
         <p class="precio">$${product.precio}</p>`;
 
-
-         // Agregar botón comprar
-      let comprar = document.createElement("button");
-      comprar.innerText = "Comprar";
-      comprar.className = "comprar";
-      content.append(comprar);
-
-      // Botón comprar
-      comprar.addEventListener("click", () => {
-        toastify();
-        const repeat = carrito.some((repeatProduct) => repeatProduct.id === product.id);
-        if (repeat) {
-          carrito.forEach((prod) => {
-            if (prod.id === product.id) {
-              prod.cantidad++;
-              saveLocal();
-              carritoCounter();
-            }
-          });
-        } else {
-          carrito.push({
-            id: product.id,
-            img: product.img,
-            nombre: product.nombre,
-            precio: product.precio,
-            cantidad: product.cantidad,
-          });
-          saveLocal();
-          carritoCounter();
+        // agrego boton comprar
+        let comprar = document.createElement("button")
+        comprar.innerText = "Comprar"
+        comprar.className = "comprar"
+        content.append(comprar)
+       
+        //(modifique)
+        function carritoCounter() {
+          cantidadCarrito.innerText = carrito.length;
         }
-      });
 
-      shopContent.append(content);
-    });
-  } catch (err) {
-    console.log("Error inesperado, decime qué pasó", err);
+        // boton comprar
+        comprar.addEventListener("click", () => {
+          toastify()
+          const repeat = carrito.some((repeatProduct) => repeatProduct.id === product.id)
+          if (repeat) {
+            carrito.map((prod) => {
+              if (prod.id === product.id) {
+                prod.cantidad++
+                saveLocal()
+                carritoCounter()
+              }
+            })
+          } else {
+            carrito.push({
+              id: product.id,
+              img: product.img,
+              nombre: product.nombre,
+              precio: product.precio,
+              cantidad: product.cantidad,
+            })
+            saveLocal()
+            carritoCounter()
+          }
+        })
+
+        shopContent.append(content);
+      });
+    } catch (err) {
+      console.log("Error inesperado, decime qué pasó", err);
+    }
   }
-}
 
 //funcion guardar al ls
-const saveLocal = () => {
+function saveLocal() {
   localStorage.setItem("carrito", JSON.stringify(carrito))
 }
+
 //funcion agregar carrito toastify
 function toastify() {
   Toastify({
@@ -117,6 +123,7 @@ function toastifyEliminar() {
     onClick: function () { pintarCarrito() } 
   }).showToast();
 }
+
 //sweet alert
 //funcion capturar nombre y pintarlo 
 function alerta() {
