@@ -146,31 +146,12 @@ async function pintarCarrito() {
     localStorage.setItem("carritoLength", JSON.stringify(carritoLength));
     cantidadCarrito.innerText = JSON.parse(localStorage.getItem("carritoLength"));
   };
+  const storedLength = localStorage.getItem("carritoLength");
+  if (storedLength) {
+    cantidadCarrito.innerText = JSON.parse(storedLength);
+  } else {
+    cantidadCarrito.innerText = "0";
+  };
   
-  //(rehice)
+  carritoCounter()
   
-async function saveLocal() {
-  await fetch("guardarCarrito", {
-    method: "POST",
-    body: JSON.stringify(carrito),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-}
-
-const getData = async () => {
-  const response = await fetch("../json/data.json");
-  const data = await response.json();
-  return data;
-};
-
-const initialize = async () => {
-  const data = await getData();
-  carritoCounter();
-};
-
-initialize();
-
-
-
