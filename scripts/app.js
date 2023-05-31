@@ -70,6 +70,7 @@ btnUser.addEventListener("click", () => {
 function carritoCounter() {
     cantidadCarrito.innerText = carrito.length;
   }
+  
 // boton comprar
 comprar.addEventListener("click", () => {
     toastify()
