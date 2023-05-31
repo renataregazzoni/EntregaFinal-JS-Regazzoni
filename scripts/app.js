@@ -47,7 +47,7 @@ btnUser.addEventListener("click", () => {
   document.addEventListener("DOMContentLoaded", obtenerDatosProd);
   async function obtenerDatosProd() {
     try {
-      const response = await fetch("../json/data.json");
+      const response = await fetch("./json/data.json");
       const data = await response.json();
   
       data.forEach((product) => {
@@ -70,7 +70,7 @@ btnUser.addEventListener("click", () => {
 function carritoCounter() {
     cantidadCarrito.innerText = carrito.length;
   }
-  
+
 // boton comprar
 comprar.addEventListener("click", () => {
     toastify()
